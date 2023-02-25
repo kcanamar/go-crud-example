@@ -14,14 +14,20 @@ func init() {
 func main() {
 	// setup a gin router
 	r := gin.Default()
-	// Declare home get route
+	
+	// Home Route
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "Hello from the other side!",
 		})
 	})
+
+	// Index Route
+	r.GET("/posts", controllers.PostsIndex)
+
 	// Create Route
-	r.POST("/post", controllers.PostCreate)
+	r.POST("/posts", controllers.PostCreate)
+
 	// setup our server listener
 	r.Run()
 }

@@ -40,3 +40,16 @@ func PostCreate(c *gin.Context) {
 		"post": post,
 	})
 }
+
+func PostsIndex(c *gin.Context) {
+	// Get all posts
+	// create an array typed models.Post to hold all posts
+	var allPosts []models.Post
+	// query the database
+	initializers.DB.Find(&allPosts)
+
+	// Response
+	c.JSON(200, gin.H{
+		"posts": allPosts,
+	})
+}
