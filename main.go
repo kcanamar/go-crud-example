@@ -20,7 +20,7 @@ func main() {
 			"message": "Hello from the other side!",
 		})
 	})
-	// Declare create Post route
+	// Create Route
 	r.POST("/post", controllers.PostCreate)
 	// setup our server listener
 	r.Run()
