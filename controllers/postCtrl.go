@@ -100,3 +100,17 @@ func PostUpdate(c *gin.Context){
 		"updatedPost": post,
 	})
 }
+
+func PostDestroy(c *gin.Context) {
+	// Get id from params
+	id := c.Param("id")
+
+	// https://gorm.io/docs/delete.html#Delete-with-primary-key
+	// Delete the post
+	initializers.DB.Delete(&models.Post{}, id)
+	
+	// Response
+	c.JSON(200, gin.H{
+		"message": "Successful Destory",
+	})
+}

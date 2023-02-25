@@ -30,7 +30,10 @@ func main() {
 
 	// Update Route
 	r.PUT("/posts/:id", controllers.PostUpdate)
-	
+
+	// Delete Route
+	r.DELETE("/posts/:id", controllers.PostDestroy)
+
 	// Show Route
 	r.GET("/posts/:id", controllers.PostShow)
 
