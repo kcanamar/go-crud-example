@@ -28,6 +28,9 @@ func main() {
 	// Create Route
 	r.POST("/posts", controllers.PostCreate)
 
+	// Show Route
+	r.GET("/posts/:id", controllers.PostShow)
+
 	// setup our server listener
 	r.Run()
 }

@@ -9,6 +9,7 @@ import (
 func PostCreate(c *gin.Context) {
 
 	// Get data off request body
+	// https://gin-gonic.com/docs/examples/binding-and-validation/
 	// create a variable for the request body
 	var reqBody struct{
 		Body string
@@ -43,13 +44,32 @@ func PostCreate(c *gin.Context) {
 
 func PostsIndex(c *gin.Context) {
 	// Get all posts
+	// https://gorm.io/docs/query.html#Retrieving-all-objects
+
 	// create an array typed models.Post to hold all posts
 	var allPosts []models.Post
+
 	// query the database
 	initializers.DB.Find(&allPosts)
 
 	// Response
 	c.JSON(200, gin.H{
 		"posts": allPosts,
+	})
+}
+
+func PostShow(c *gin.Context) {
+	// Get single post by id
+	// https://gorm.io/docs/query.html#Retrieving-objects-with-primary-key
+
+	// variable to hold all post typed models.Post
+	var post models.Post
+
+	// query the database
+	initializers.DB.First(&post, c.Param("id"))
+
+	// Response
+	c.JSON(200, gin.H{
+		"post": post,
 	})
 }
