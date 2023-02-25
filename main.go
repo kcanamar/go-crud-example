@@ -1,13 +1,17 @@
 package main
 
 import (
+	"os"
+
 	"github.com/gin-gonic/gin"
 	"github.com/kcanamar/go-crud/controllers"
 	"github.com/kcanamar/go-crud/initializers"
 )
 
 func init() {
-	initializers.LoadEnv()
+	if os.Getenv("ENV") != "production" {
+		initializers.LoadEnv()
+	}
 	initializers.ConnectDB()
 }
 
