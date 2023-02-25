@@ -28,6 +28,9 @@ func main() {
 	// Create Route
 	r.POST("/posts", controllers.PostCreate)
 
+	// Update Route
+	r.PUT("/posts/:id", controllers.PostUpdate)
+	
 	// Show Route
 	r.GET("/posts/:id", controllers.PostShow)
 

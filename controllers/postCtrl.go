@@ -20,14 +20,14 @@ func PostCreate(c *gin.Context) {
 	 
 
 	// Create a post - https://gorm.io/docs/create.html
-
 	// hardcoded example
 	// post := models.Post{Title: "Yes", Body: "We did it!"}
 
 	// request body example
-	post := models.Post{Title: reqBody.Title, Body: reqBody.Body}
+	newPost := models.Post{Title: reqBody.Title, Body: reqBody.Body}
 
-	result := initializers.DB.Create(&post)
+	// create post in database with newPost 
+	result := initializers.DB.Create(&newPost)
 	
 	// handle error from result
 	if result.Error != nil {
@@ -38,7 +38,7 @@ func PostCreate(c *gin.Context) {
 	// return post
 	c.JSON(200, gin.H{
 		// send back a confirmation of the post
-		"post": post,
+		"post": newPost,
 	})
 }
 
@@ -71,5 +71,32 @@ func PostShow(c *gin.Context) {
 	// Response
 	c.JSON(200, gin.H{
 		"post": post,
+	})
+}
+
+func PostUpdate(c *gin.Context){
+	// Get the id from params
+	id := c.Param("id")
+
+	// Get the request body and bind to context
+	var body struct{
+		Title string
+		Body string
+	}
+	c.Bind(&body)
+
+	// Find post to be updated
+	var post models.Post
+	initializers.DB.Find(&post, id)
+
+	// https://gorm.io/docs/update.html#Updates-multiple-columns
+	// Update Post
+	initializers.DB.Model(&post).Updates(models.Post{
+		Title: body.Title, Body: body.Body,
+	})
+
+	// Response
+	c.JSON(200, gin.H{
+		"updatedPost": post,
 	})
 }
